@@ -21,10 +21,6 @@ class Fila:
         item = Item(valor)
         if not self.__inicio:
             self.__inicio = item
-            return
-
-        if not self.__fim:
-            self.__inicio._next = item
             self.__fim = item
             return
 
@@ -33,9 +29,9 @@ class Fila:
 
     def excluir(self):
         if self.__inicio:
-            if self.__inicio == self.__fim:
-                self.__fim = None
             self.__inicio = self.__inicio._next
+            if not self.__inicio:
+                self.__fim = None
 
 
 if __name__ == "__main__":
@@ -53,6 +49,15 @@ if __name__ == "__main__":
     print(fila.inicio())
     print(fila.fim(), "\n")
 
+    item = fila.inicio()
+    while True:
+        if item:
+            print(item.valor)
+            item = item._next
+            continue
+        break
+
+    print()
     fila.excluir()
     print(fila.inicio())
     print(fila.fim(), "\n")
