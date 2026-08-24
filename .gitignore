@@ -1,0 +1,6 @@
+# Ignora arquivos compilados do Python
+__pycache__/
+*.pyc
+
+# Ignora pastas de configuração de editores (como VS Code)
+.vscode/
