@@ -43,11 +43,13 @@ class Lista:
         no_atual = self.header
         if no_atual.coeficiente == coeficiente and no_atual.grau == grau:
             self.header = no_atual.next
+            self.__destrutor(no_atual)
             return
 
         while no_atual.next:
             if no_atual.next.coeficiente == coeficiente and no_atual.next.grau == grau:
                 no_atual.next = no_atual.next.next
+                self.__destrutor(no_atual)
                 return
 
             no_atual = no_atual.next
@@ -79,6 +81,15 @@ class Lista:
             no = no.next
 
         return contador
+
+    def existe(self, coeficiente:float, grau:int):
+        no_atual = self.header
+        while no_atual:
+            if no_atual.coeficiente == coeficiente and no_atual.grau == grau:
+                return no_atual
+
+            no_atual = no_atual.next
+        
 
 
     
