@@ -24,3 +24,7 @@ lista.excluir(0, 0)
 for no in lista.mostrarAll():
     print(no, '\n')
 # - fim -
+
+#teste método existe
+print(lista.existe(5,5))
+print(lista.existe(5, 9))
