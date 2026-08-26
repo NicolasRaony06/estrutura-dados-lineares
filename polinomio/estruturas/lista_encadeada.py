@@ -36,6 +36,22 @@ class Lista:
              
             no_atual = no_atual.next
 
+    def __destrutor(self, no:No):
+        del(no)
+
+    def excluir(self, coeficiente:float, grau:int):
+        no_atual = self.header
+        if no_atual.coeficiente == coeficiente and no_atual.grau == grau:
+            self.header = no_atual.next
+            return
+
+        while no_atual.next:
+            if no_atual.next.coeficiente == coeficiente and no_atual.next.grau == grau:
+                no_atual.next = no_atual.next.next
+                return
+
+            no_atual = no_atual.next
+
     def mostrarAll(self):
         nos = []
         no = self.header
@@ -63,6 +79,8 @@ class Lista:
             no = no.next
 
         return contador
+
+
     
 
 
