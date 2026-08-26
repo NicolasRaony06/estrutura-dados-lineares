@@ -50,4 +50,20 @@ class Lista:
     def obterValor(self, no:No):
         return no.coeficiente, no.grau, no.next
 
+    def alterarNo(self, no:No, coeficiente:float, grau:int):
+        if coeficiente and grau:
+            no.coeficiente = coeficiente
+            no.grau = grau
+
+    def tamanho(self):
+        no = self.header
+        contador = 0
+        while no:
+            contador += 1
+            no = no.next
+
+        return contador
+    
+
+
     
