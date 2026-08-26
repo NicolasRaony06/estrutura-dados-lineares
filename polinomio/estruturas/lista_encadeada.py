@@ -44,3 +44,10 @@ class Lista:
             no = no.next
         return nos
 
+    def obterProximo(self, no:No):
+        return no.next
+
+    def obterValor(self, no:No):
+        return no.coeficiente, no.grau, no.next
+
+    
