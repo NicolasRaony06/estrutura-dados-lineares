@@ -17,4 +17,4 @@ print(polinomio.grau())
 print(polinomio.tamanho())
 
 #teste atribuição de valor X
-print(polinomio.avaliacao(2))
+print(polinomio.definirX(2))
