@@ -12,6 +12,7 @@ class Lista:
         self.header = None
 
     def inserir(self, coeficiente:float, grau:int):
+        '''Recebe uma valor float para coeficiente e inteiro para grau, e insere um novo nó em lista.'''
         novo_no = No(coeficiente, grau)
         
         if not self.header:
@@ -40,6 +41,7 @@ class Lista:
         del(no)
 
     def excluir(self, coeficiente:float, grau:int):
+        '''Recebe uma valor float para coeficiente e inteiro para grau, e caso nó exista, o exclui.'''
         no_atual = self.header
         if no_atual.coeficiente == coeficiente and no_atual.grau == grau:
             self.header = no_atual.next
@@ -55,6 +57,7 @@ class Lista:
             no_atual = no_atual.next
 
     def mostrarAll(self):
+        '''Retorna todos os nós da lista.'''
         nos = []
         no = self.header
         while no:
@@ -63,17 +66,21 @@ class Lista:
         return nos
 
     def obterProximo(self, no:No):
+        '''Recebe um objeto de nó e retorna o seu proxímo nó.'''
         return no.next
 
     def obterValor(self, no:No):
+        '''Recebe um objeto de nó e retorna seus atributos.'''
         return no.coeficiente, no.grau, no.next
 
     def alterarNo(self, no:No, coeficiente:float, grau:int):
+        '''Recebe como parametro um objeto de nó, um coeficiente e grau, e altera o objeto.'''
         if coeficiente and grau:
             no.coeficiente = coeficiente
             no.grau = grau
 
     def tamanho(self):
+        '''Retorna a quantidade de nós presentes na lista.'''
         no = self.header
         contador = 0
         while no:
@@ -83,6 +90,7 @@ class Lista:
         return contador
 
     def existe(self, coeficiente:float, grau:int):
+        '''Recebe um coeficiente e grau, e retorna o um objeto de nó referente caso exista.'''
         no_atual = self.header
         while no_atual:
             if no_atual.coeficiente == coeficiente and no_atual.grau == grau:
