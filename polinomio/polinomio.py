@@ -29,6 +29,23 @@ class Polinomio:
             termo = termo.next
         return resultado
 
+    def simplificar(self, polinomio = None):
+        '''Simplifica o polinômio em termos com coeficiente 0 e iguais.'''
+        termo = self.termos.header
+        while termo:
+            if termo.coeficiente == 0:
+                self.termos.excluir(termo.coeficiente, termo.grau)
+                termo = termo.next
+                continue
+            termo = termo.next
+
+        #TODO
+        termos = self.termos.mostrarAll()
+        for termo1 in termos[:]:
+            for termo2 in termos[:]:
+                if termo1.grau == termo2.grau:
+                    pass
+
     def __str__(self):
         polinomio = ""
         termos = self.termos.mostrarAll()
