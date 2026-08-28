@@ -19,6 +19,13 @@ print(polinomio)
 print(polinomio2)
 print()
 
+#teste de subtração via sobrecarga de __sub__
+polinomio3 = polinomio - polinomio2
+print(polinomio3)
+print(polinomio)
+print(polinomio2)
+print()
+
 # #teste sobrecarga str
 # print(polinomio)
 
