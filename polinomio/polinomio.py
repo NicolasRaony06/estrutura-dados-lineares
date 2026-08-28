@@ -29,7 +29,7 @@ class Polinomio:
             termo = termo.next
         return resultado
 
-    def simplificar(self, polinomio = None):
+    def simplificar(self):
         '''Simplifica o polinômio em termos com coeficiente 0 e iguais.'''
         # termo = self.termos.header
         # while termo:
@@ -51,6 +51,18 @@ class Polinomio:
                     termo1.coeficiente += termo2.coeficiente
                     self.termos.excluir(termo2.coeficiente, termo2.grau)
         # print(self.termos.mostrarAll())
+
+    def __merge(self, polinomio):
+        import copy
+        polinomio_merged = copy.deepcopy(self)
+        polinomio_merged.termos.mostrarAll()[-1].next = copy.deepcopy(polinomio).termos.header
+
+        return polinomio_merged
+
+    def __add__(self, polinomio):
+        polinomio_merged = self.__merge(polinomio)
+        polinomio_merged.simplificar()
+        return polinomio_merged
 
     def __str__(self):
         polinomio = ""
