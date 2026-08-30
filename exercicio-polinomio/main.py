@@ -1,5 +1,16 @@
 from polinomio import Polinomio
 
+def stringParaPolinomio(polinomioStr:str):
+    if len(polinomioStr) < 2:
+        return polinomioStr
+
+    polinomioStr = polinomioStr.split(' ')
+    polinomio = Polinomio()
+    for i, numero in enumerate(polinomioStr):
+        if i % 2 == 0:
+            polinomio.inserirTermo(float(numero), int(polinomioStr[i+1]))
+    return polinomio
+
 def lerArquivo(caminho_arquivo:str = None):
     '''Procura por padrão um arquivo .txt em /data, caso não seja especificado um caminho. Retorna um dicionário contendo as instruções e os polinomios.'''
     if not caminho_arquivo:
@@ -18,7 +29,20 @@ def lerArquivo(caminho_arquivo:str = None):
                     }
                 instrucao_prev = f"instrucao{index}"
                 continue
-            instrucoes[instrucao_prev]['polinomios'].append(line.rstrip('\n'))
+            instrucoes[instrucao_prev]['polinomios'].append(stringParaPolinomio(line.strip().lower().rstrip('\n')))
     return instrucoes
 
-lerArquivo()
+def executar():
+    caminho_arquivo = input("Digite o caminho do arquivo .txt (Deixe em branco para o utilizar o padrão em /data):")
+
+    instrucoes = lerArquivo(caminho_arquivo)
+    print(instrucoes)
+    resultados = []
+    for instrucao in instrucoes:
+        match instrucao.comando:
+            case '+':
+                pass
+
+if __name__ == "__main__":
+    executar()
+
