@@ -76,6 +76,15 @@ class Polinomio:
         polinomio_merged.simplificar()
         return polinomio_merged
           
+    def __mul__(self, polinomio):
+        polinomio_multiplicado = Polinomio()
+        for termo1 in self.termos.mostrarAll():
+            for termo2 in polinomio.termos.mostrarAll():
+                coeficiente = termo1.coeficiente * termo2.coeficiente
+                grau = termo1.grau + termo2.grau
+                polinomio_multiplicado.inserirTermo(coeficiente, grau)
+        polinomio_multiplicado.simplificar()
+        return polinomio_multiplicado
 
     def __str__(self):
         polinomio = ""
