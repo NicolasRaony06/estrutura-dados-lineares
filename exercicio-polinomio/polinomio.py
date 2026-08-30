@@ -88,6 +88,7 @@ class Polinomio:
 
     def __str__(self):
         polinomio = ""
+        self.simplificar()
         termos = self.termos.mostrarAll()
         for termo in termos:
             if termo.coeficiente > 0:
