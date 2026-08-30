@@ -1,8 +1,9 @@
 from polinomio import Polinomio
 
 def stringParaPolinomio(polinomioStr:str):
+    '''Recebe uma string no formato 'coefiente grau...' e converte para um objeto de Polinomio. Retorna um objeto de Polinomio.'''
     if len(polinomioStr) < 2:
-        return polinomioStr
+        return int(polinomioStr)
 
     polinomioStr = polinomioStr.split(' ')
     polinomio = Polinomio()
@@ -36,13 +37,31 @@ def executar():
     caminho_arquivo = input("Digite o caminho do arquivo .txt (Deixe em branco para o utilizar o padrão em /data):")
 
     instrucoes = lerArquivo(caminho_arquivo)
-    print(instrucoes)
     resultados = []
-    for instrucao in instrucoes:
-        match instrucao.comando:
+    for instrucao in instrucoes.values():
+        match instrucao['comando']:
             case '+':
-                pass
+                polinomio = instrucao['polinomios'][0] + instrucao['polinomios'][1]
+                resultados.append(polinomio)
+            case '-':
+                polinomio = instrucao['polinomios'][0] - instrucao['polinomios'][1]
+                resultados.append(polinomio)
+            case '*':
+                polinomio = instrucao['polinomios'][0] * instrucao['polinomios'][1]
+                resultados.append(polinomio)
+            case 'g':
+                resultados.append(instrucao['polinomios'][0].grau())
+            case 't':
+                resultados.append(instrucao['polinomios'][0].tamanho())
+            case 'a':
+                polinomio = instrucao['polinomios'][1].definirX(instrucao['polinomios'][0])
+                resultados.append(polinomio)
+            case 'p':
+                resultados.append(str(instrucao['polinomios'][0]))
+    return resultados
 
 if __name__ == "__main__":
-    executar()
+    resultados = executar()
+    for resultado in resultados:
+        print(resultado)
 
