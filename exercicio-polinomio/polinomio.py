@@ -52,10 +52,13 @@ class Polinomio:
                     self.termos.excluir(termo2.coeficiente, termo2.grau)
         # print(self.termos.mostrarAll())
 
-    def __merge(self, polinomio, is_copia = False):
+    def __merge(self, polinomio):
         import copy
-        polinomio_merged = copy.deepcopy(self)
-        polinomio_merged.termos.mostrarAll()[-1].next = copy.deepcopy(polinomio).termos.header if not is_copia else polinomio.termos.header
+        polinomio_merged = Polinomio()
+
+        nos = copy.deepcopy(self.termos.mostrarAll() + polinomio.termos.mostrarAll())
+        for no in nos:
+            polinomio_merged.inserirTermo(no.coeficiente, no.grau)
 
         return polinomio_merged
 
@@ -72,7 +75,7 @@ class Polinomio:
         for termo in termos:
             termo.coeficiente *= -1
 
-        polinomio_merged = self.__merge(polinomio, True)
+        polinomio_merged = self.__merge(polinomio)
         polinomio_merged.simplificar()
         return polinomio_merged
           
