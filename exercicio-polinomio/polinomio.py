@@ -32,16 +32,18 @@ class Polinomio:
     def simplificar(self):
         '''Simplifica o polinômio em termos com coeficiente 0 e iguais.'''
         termos = self.termos.mostrarAll()
-        termos_reduzida = termos[:]
         for termo1 in termos:
-            termos_reduzida.remove(termo1)
-            for termo2 in termos_reduzida:
+            termo2 = termo1.next
+            while termo2:
                 if termo1.grau == termo2.grau:
                     termo1.coeficiente += termo2.coeficiente
                     self.termos.excluir(termo2.coeficiente, termo2.grau)
-                if termo1.coeficiente == 0:
-                    self.termos.excluir(termo1.coeficiente, termo1.grau)
-        
+                    termos.remove(termo2)
+                termo2 = termo2.next
+            if termo1.coeficiente == 0:
+                self.termos.excluir(termo1.coeficiente, termo1.grau)
+                termos.remove(termo1)
+            
     def __merge(self, polinomio):
         import copy
         polinomio_merged = Polinomio()
