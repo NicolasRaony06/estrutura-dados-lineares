@@ -31,27 +31,17 @@ class Polinomio:
 
     def simplificar(self):
         '''Simplifica o polinômio em termos com coeficiente 0 e iguais.'''
-        # termo = self.termos.header
-        # while termo:
-        #     if termo.coeficiente == 0:
-        #         self.termos.excluir(termo.coeficiente, termo.grau)
-        #         termo = termo.next
-        #         continue
-        #     termo = termo.next
         termos = self.termos.mostrarAll()
         termos_reduzida = termos[:]
         for termo1 in termos:
-            if termo1.coeficiente == 0:
-                self.termos.excluir(termo1.coeficiente, termo1.grau)
-                continue
             termos_reduzida.remove(termo1)
             for termo2 in termos_reduzida:
                 if termo1.grau == termo2.grau:
-                    # print(termo1.grau, termo2.grau)
                     termo1.coeficiente += termo2.coeficiente
                     self.termos.excluir(termo2.coeficiente, termo2.grau)
-        # print(self.termos.mostrarAll())
-
+                if termo1.coeficiente == 0:
+                    self.termos.excluir(termo1.coeficiente, termo1.grau)
+        
     def __merge(self, polinomio):
         import copy
         polinomio_merged = Polinomio()
