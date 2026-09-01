@@ -85,13 +85,15 @@ class Polinomio:
         polinomio = ""
         self.simplificar()
         termos = self.termos.mostrarAll()
+        if not termos:
+            return "0"
+
         for termo in termos:
             if termo.coeficiente > 0:
-                polinomio += f"+ {termo.coeficiente}x^{termo.grau} "
+                polinomio += f"+ {termo.coeficiente if termo.coeficiente != 1 else ''}{f"x{f"^{termo.grau}" if termo.grau != 1 else ''}" if termo.grau else ''} "
                 continue
 
-            polinomio += f"- {(termo.coeficiente)*-1}x^{termo.grau} "
-
+            polinomio += f"- {((termo.coeficiente)*-1) if (termo.coeficiente * -1) != 1 else ''}{f"x{f"^{termo.grau}" if termo.grau != 1 else ''}" if termo.grau else ''} "
         return polinomio
 
     
