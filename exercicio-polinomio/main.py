@@ -42,22 +42,22 @@ def executar():
         match instrucao['comando']:
             case '+':
                 polinomio = instrucao['polinomios'][0] + instrucao['polinomios'][1]
-                resultados.append(polinomio)
+                resultados.append(f"Resultado da adição: {polinomio}")
             case '-':
                 polinomio = instrucao['polinomios'][0] - instrucao['polinomios'][1]
-                resultados.append(polinomio)
+                resultados.append(f"Resultado da subtração: {polinomio}")
             case '*':
                 polinomio = instrucao['polinomios'][0] * instrucao['polinomios'][1]
-                resultados.append(polinomio)
+                resultados.append(f"Resultado da multiplicação: {polinomio}")
             case 'g':
-                resultados.append(instrucao['polinomios'][0].grau())
+                resultados.append(f"Grau: {instrucao['polinomios'][0].grau()}")
             case 't':
-                resultados.append(instrucao['polinomios'][0].tamanho())
+                resultados.append(f"Tamanho: {instrucao['polinomios'][0].tamanho()}")
             case 'a':
                 polinomio = instrucao['polinomios'][1].definirX(instrucao['polinomios'][0])
-                resultados.append(polinomio)
+                resultados.append(f"Resultado da avaliação: {polinomio}")
             case 'p':
-                resultados.append(str(instrucao['polinomios'][0]))
+                resultados.append(f"Polinômio: {str(instrucao['polinomios'][0])}")
     return resultados
 
 if __name__ == "__main__":
