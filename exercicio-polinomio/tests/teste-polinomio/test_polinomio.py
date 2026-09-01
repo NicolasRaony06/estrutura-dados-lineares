@@ -11,20 +11,18 @@ polinomio2 = Polinomio()
 polinomio2.inserirTermo(6, 3)
 polinomio2.inserirTermo(-1, 0)
 polinomio2.inserirTermo(8, 2)
+termos = polinomio.termos.mostrarAll()
 
-#teste adição via sobrecarga de __add__
-polinomio3 = polinomio + polinomio2
-print(polinomio3)
-print(polinomio)
-print(polinomio2)
+termo2 = termos[1]
+print(termo2)
+print(len(termos))
+polinomio.excluirTermo(termos[0].coeficiente, termos[0].grau)
+termos.remove(termo2)
+print(len(termos))
 print()
+print(termos.count(termo2))
 
-#teste de subtração via sobrecarga de __sub__
-polinomio3 = polinomio - polinomio2
-print(polinomio3)
-print(polinomio)
-print(polinomio2)
-print()
+
 
 # #teste sobrecarga str
 # print(polinomio)
