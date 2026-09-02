@@ -13,6 +13,7 @@ class Pilha:
         self.__tamanho_contador = 0
 
     def top(self):
+        '''Retorna o ultimo nó adicionado.'''
         return self.__top
 
     def __push(self, valor):
@@ -20,6 +21,7 @@ class Pilha:
         self.__top = item 
 
     def push(self, valor):
+        '''Recebe um valor, e adiciona um nó na ultima posição, topo.'''
         if not self.__tamanho:
             self.__push(valor)
             return
@@ -29,6 +31,7 @@ class Pilha:
             self.__tamanho_contador += 1
                 
     def pop(self):
+        '''Retira o ulitmo nó adicionado, topo.'''
         if self.__top:
             item_prev = self.__top.prev
             self.__top = item_prev
