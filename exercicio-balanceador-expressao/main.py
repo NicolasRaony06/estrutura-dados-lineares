@@ -12,17 +12,26 @@ def balanceador(string:str):
             pilha.push(char)
             continue
         else:
-            if pilha.top().valor == pares[finded - 1]:
-                pilha.pop()
-                continue
-            desbalanceamento_encontrado.extend([index, pares[pares.find(pilha.top().valor) + 1]])
+            if not pilha.vazia():
+                if pilha.top().valor == pares[finded - 1]:
+                    pilha.pop()
+                    continue
+            desbalanceamento_encontrado.append((index - 1, pares[finded - 1]))
 
-    if pilha.vazia():
+
+    if not pilha.vazia():
+        no = pilha.top()
+        while no:
+            finded = pares.find(no.valor)
+            desbalanceamento_encontrado.append((0, pares[finded + 1]))
+            no = no.prev
+            pilha.pop()
+    
+    if len(desbalanceamento_encontrado) == 0:
         return True
     return False, desbalanceamento_encontrado
 
 if __name__ == "__main__":
     string = input("Escreva a expressão a ser verificada: ")
     resultado = balanceador(string)
-    
     print(resultado)

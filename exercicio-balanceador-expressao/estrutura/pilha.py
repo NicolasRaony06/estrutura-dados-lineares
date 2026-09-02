@@ -7,10 +7,9 @@ class Item:
         return f"{self.valor}"
 
 class Pilha:
-    def __init__(self, tamanho : int = None):
+    def __init__(self):
         self.__top = None
-        self.__tamanho = tamanho
-        self.__tamanho_contador = 0
+        self.__tamanho = 0
 
     def top(self):
         '''Retorna o ultimo nó adicionado.'''
@@ -22,19 +21,15 @@ class Pilha:
 
     def push(self, valor):
         '''Recebe um valor, e adiciona um nó na ultima posição, topo.'''
-        if not self.__tamanho:
-            self.__push(valor)
-            return
-        
-        if self.__tamanho > self.__tamanho_contador:
-            self.__push(valor)
-            self.__tamanho_contador += 1
+        self.__push(valor)
+        self.__tamanho += 1
                 
     def pop(self):
         '''Retira o ulitmo nó adicionado, topo.'''
         if self.__top:
             item_prev = self.__top.prev
             self.__top = item_prev
+            self.__tamanho -= 1
 
     def vazia(self):
         if not self.__top:
@@ -43,3 +38,7 @@ class Pilha:
     def cheia(self):
         if self.__tamanho_contador == self.__tamanho:
             return True
+
+    def tamanho(self):
+        '''Retorna quantidade de nós da pilha.'''
+        return self.__tamanho
