@@ -16,14 +16,13 @@ def balanceador(string:str):
                 if pilha.top().valor == pares[finded - 1]:
                     pilha.pop()
                     continue
-            desbalanceamento_encontrado.append((index - 1, pares[finded - 1]))
-
+            desbalanceamento_encontrado.append((index, pares[finded - 1]))
 
     if not pilha.vazia():
         no = pilha.top()
         while no:
             finded = pares.find(no.valor)
-            desbalanceamento_encontrado.append((0, pares[finded + 1]))
+            desbalanceamento_encontrado.append((len(string) - pilha.tamanho(), pares[finded + 1]))
             no = no.prev
             pilha.pop()
     

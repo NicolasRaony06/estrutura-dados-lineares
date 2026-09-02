@@ -34,10 +34,6 @@ class Pilha:
     def vazia(self):
         if not self.__top:
             return True
-        
-    def cheia(self):
-        if self.__tamanho_contador == self.__tamanho:
-            return True
 
     def tamanho(self):
         '''Retorna quantidade de nós da pilha.'''
