@@ -1,4 +1,4 @@
-from estruturas.lista_encadeada import Lista
+from estrutura.lista_encadeada import Lista
 
 class Polinomio:
     def __init__(self):
