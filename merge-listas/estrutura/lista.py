@@ -9,35 +9,48 @@ class List:
         self.nodesCounter = 0
 
     def insert(self, val):
-        if not val in range(-100, 101):
-            raise ValueError("Node Value exceded the maximun expected.")
+        if val not in range(-100, 101):
+            raise ValueError("Node value exceeded the maximum expected.")
 
-        if not self.nodesCounter <= 50:
-            raise ValueError("List size exceded the limit of 50 nodes.")
+        if self.nodesCounter >= 50:
+            raise ValueError("List size exceeded the limit of 50 nodes.")
 
         node = ListNode(val)
-        if not self.header:
+
+        if self.header is None:
             self.header = node
-            self.nodesCounter += 1
-            return
+        else:
+            currNode = self.header
 
-        currNode = self.header
-        while currNode:
-            if not currNode.next:
-                currNode.next = node
-                self.nodesCounter += 1
-                break
-            currNode = currNode.next
+            while currNode.next:
+                currNode = currNode.next
 
+            currNode.next = node
+
+        self.nodesCounter += 1
+        
     def pop(self):
-        node = self.header
-        while node:
-            if not node.next.next:
-                node.next = None
-                self.nodesCounter -= 1
-                break
-            node = node.next
+        if self.header is None:
+            return None
+
+        if self.header.next is None:
+            node = self.header
+            self.header = None
+            self.nodesCounter -= 1
+            return node
+
+        current = self.header
+
+        while current.next.next:
+            current = current.next
+
+        node = current.next
+        current.next = None
+
+        self.nodesCounter -= 1
+
+        return node
 
 
-                    
+                        
 
