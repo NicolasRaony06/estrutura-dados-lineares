@@ -1,6 +1,9 @@
 from compactador import Compactador
 
-comp = Compactador('example.bin')
+comp = Compactador('arquivos/example2.txt')
 
-comp.readFile()
-comp.getData()
+comp.readTxt()
+
+
+
+
