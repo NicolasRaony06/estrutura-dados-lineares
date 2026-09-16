@@ -28,9 +28,16 @@ genes_values = {
 value = 0b00000000
 left_deloc = 6
 for char in gene:
-    print(left_deloc)
     value |= (genes_values.get(char) << left_deloc)
     left_deloc -= 2
 
-print(left_deloc)
+# print(left_deloc)
+# print(format(value, '08b'))
+
+value = 0b0000000000
+
+value |= 4028
+
+b = bytes([value])
+
 print(format(value, '08b'))

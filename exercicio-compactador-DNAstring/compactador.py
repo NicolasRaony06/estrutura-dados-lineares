@@ -26,7 +26,7 @@ class Compactador:
         else: raise FileNotFoundError("File extension must be '.txt'.")
 
     def __addHeader(self):
-        pass
+        binary_value = 0b00000000000000000000000000000000
 
     def compress(self):
         self.readTxt()
@@ -39,10 +39,12 @@ class Compactador:
             if left_deloc == 0:
                 left_deloc = 6
                 binary_values.append(binary_value)
-                # print(format(binary_value, '08b'))
                 binary_value = 0b00000000
                 continue
             left_deloc -= 2
+
+        if not left_deloc == 6:
+            binary_values.append(binary_value)
 
         self.__bytes = bytes(binary_values)
         return self.__bytes
