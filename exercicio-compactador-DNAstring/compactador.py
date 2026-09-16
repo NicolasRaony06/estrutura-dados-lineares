@@ -13,7 +13,7 @@ class Compactador:
         self.__bytes = None
 
     def readBin(self):
-        if self.file.suffix == '.txt':
+        if self.file.suffix == '.bin':
             with open(self.file, 'rb') as file:
                 self.__bytes = file.read()
         else: raise FileNotFoundError("File extension must be '.bin'.")
@@ -25,32 +25,33 @@ class Compactador:
             self.__string = self.__string.replace('\n', '').replace(' ', '')
         else: raise FileNotFoundError("File extension must be '.txt'.")
 
-    def __addHeader(self):
-        binary_value = 0b00000000000000000000000000000000
+    def __createHeader(self, genes_counter: int):
+        return genes_counter.to_bytes(4, 'big')
 
     def compress(self):
         self.readTxt()
-
+        
         binary_values = []
         binary_value = 0b00000000
         left_deloc = 6
+        genes_counter = 0
         for gene in self.__string:
-            binary_value |= (self.genes_values.get(gene.upper()) << left_deloc)
-            if left_deloc == 0:
-                left_deloc = 6
-                binary_values.append(binary_value)
-                binary_value = 0b00000000
-                continue
-            left_deloc -= 2
+            gene_values = self.genes_values.get(gene.upper())
+            if gene_values is not None:
+                genes_counter += 1
+                binary_value |= (gene_values << left_deloc)
+                if left_deloc == 0:
+                    left_deloc = 6
+                    binary_values.append(binary_value)
+                    binary_value = 0b00000000
+                    continue
+                left_deloc -= 2
 
         if not left_deloc == 6:
             binary_values.append(binary_value)
-
-        self.__bytes = bytes(binary_values)
+        
+        self.__bytes = self.__createHeader(genes_counter) + bytes(binary_values)
         return self.__bytes
         
 
-    def getData(self):
-        print(self.__string)
-        print()
-        print(self.__binaries)
+    
