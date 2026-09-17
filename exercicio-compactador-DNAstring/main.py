@@ -5,6 +5,6 @@ from compactador import Compactador
 # comp.save()
 
 comp = Compactador('arquivos/example2_compressed.bin')
-comp.decompress()
+print(comp.decompress())
 
 

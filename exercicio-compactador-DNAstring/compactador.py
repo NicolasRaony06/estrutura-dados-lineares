@@ -87,20 +87,22 @@ class Compactador:
         return inverted_dict
 
     def decompress(self):
+        """Converts DNA bytes back to string. Returns a string containing the DNA sequence."""       
         self._readBin()
         max_genes = int.from_bytes(self.__getHeader(), 'big')
         genes_values_inverted = self.__genesValuesInverter()
 
         mask = 0b11
         genes = []
+        left_shifts = [6,4,2,0]
         for byte in self.__bytes:
-            genes.append(genes_values_inverted[byte >> 6 & mask])
-            genes.append(genes_values_inverted[byte >> 4 & mask])
-            genes.append(genes_values_inverted[byte >> 2 & mask])
-            genes.append(genes_values_inverted[byte >> 0 & mask])
-
+            for shift in left_shifts:
+                genes.append(genes_values_inverted[(byte >> shift) & mask])
+                if len(genes) >= max_genes: 
+                    break
+            
         self.__string = ''.join(genes)
-           
+        return self.__string
 
         
         
