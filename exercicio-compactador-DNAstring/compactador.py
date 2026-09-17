@@ -36,6 +36,13 @@ class Compactador:
             file.write(self.__bytes)
         return file
 
+    def _writeTxt(self):
+        """Writes a file with the same name as the prev file plus '_decompressed.txt'. Returns the file path."""
+        file = self.file.with_name(self.file.stem + '_decompressed.txt')
+        with open(file, 'w') as file:
+            file.write(self.__string)
+        return file
+
     def save(self):
         """Saves the compress/decompress content. Controls whether the file will be a .txt or .bin."""
         file_suffix = self.file.suffix
