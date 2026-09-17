@@ -9,10 +9,11 @@ class Compactador:
     def __init__(self, file):
         from pathlib import Path
         self.file = Path(file)
-        self.__string = None
+        self.__string = ''
         self.__bytes = None
 
     def _readBin(self):
+        """Reads a file .bin. Returns a bytes object."""
         if self.file.suffix == '.bin':
             with open(self.file, 'rb') as file:
                 self.__bytes = file.read()
@@ -20,6 +21,7 @@ class Compactador:
         else: raise FileNotFoundError("File extension must be '.bin'.")
 
     def _readTxt(self):
+        """Reads a file .txt. Returns a formated string."""
         if self.file.suffix == '.txt':
             with open(self.file) as file:
                 self.__string = file.read().strip()
@@ -35,6 +37,7 @@ class Compactador:
         return file
 
     def save(self):
+        """Saves the compress/decompress content. Controls whether the file will be a .txt or .bin."""
         file_suffix = self.file.suffix
         if file_suffix == '.txt':
             return self._writeBin()
@@ -71,8 +74,33 @@ class Compactador:
         self.__bytes = self.__createHeader(genes_counter) + bytes(binary_values)
         return self.__bytes
 
+    def __getHeader(self, detach=True):
+        header = self.__bytes[:4]
+        if detach:
+           self.__bytes = self.__bytes[4:]
+        return header
+
+    def __genesValuesInverter(self):
+        inverted_dict = {}
+        for key, value in self.genes_values.items():
+            inverted_dict[value] = key
+        return inverted_dict
+
     def decompress(self):
-        pass
+        self._readBin()
+        max_genes = int.from_bytes(self.__getHeader(), 'big')
+        genes_values_inverted = self.__genesValuesInverter()
+
+        mask = 0b11
+        genes = []
+        for byte in self.__bytes:
+            genes.append(genes_values_inverted[byte >> 6 & mask])
+            genes.append(genes_values_inverted[byte >> 4 & mask])
+            genes.append(genes_values_inverted[byte >> 2 & mask])
+            genes.append(genes_values_inverted[byte >> 0 & mask])
+
+        self.__string = ''.join(genes)
+           
 
         
         
