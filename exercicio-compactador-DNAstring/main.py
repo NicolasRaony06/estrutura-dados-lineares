@@ -4,8 +4,8 @@ from compactador import Compactador
 # comp.compress()
 # comp.save()
 
-# comp = Compactador('data/example_compressed.bin')
-# comp.decompress()
-# comp.save()
+comp = Compactador('data/example_compressed.bin')
+comp.decompress()
+comp.save()
 
 

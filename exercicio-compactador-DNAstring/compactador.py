@@ -53,7 +53,8 @@ class Compactador:
         raise FileNotFoundError("No file .bin or .txt to save was found.")
 
     def __createHeader(self, genes_counter: int):
-        return genes_counter.to_bytes(4, 'big')
+        genes_counter = genes_counter % 4
+        return genes_counter.to_bytes(1, 'big')
 
     def compress(self):
         """Converts the DNA string Genes to Bytes. Returns a bytes object."""
@@ -77,14 +78,15 @@ class Compactador:
 
         if not left_deloc == 6:
             binary_values.append(binary_value)
-        
+
+        # print(int.from_bytes(self.__createHeader(genes_counter)))
         self.__bytes = self.__createHeader(genes_counter) + bytes(binary_values)
         return self.__bytes
 
     def __getHeader(self, detach=True):
-        header = self.__bytes[:4]
+        header = self.__bytes[0]
         if detach:
-           self.__bytes = self.__bytes[4:]
+           self.__bytes = self.__bytes[1:]
         return header
 
     def __genesValuesInverter(self):
@@ -96,17 +98,19 @@ class Compactador:
     def decompress(self):
         """Converts DNA bytes back to string. Returns a string containing the DNA sequence."""       
         self._readBin()
-        max_genes = int.from_bytes(self.__getHeader(), 'big')
+        max_genes = self.__getHeader()
         genes_values_inverted = self.__genesValuesInverter()
 
         mask = 0b11
         genes = []
         left_shifts = [6,4,2,0]
-        for byte in self.__bytes:
-            for shift in left_shifts:
+        for byte_counter, byte in enumerate(self.__bytes):
+            for genes_counter, shift in enumerate(left_shifts):
                 genes.append(genes_values_inverted[(byte >> shift) & mask])
-                if len(genes) >= max_genes: 
-                    break
+                if byte_counter == len(self.__bytes) - 1:
+                    if not max_genes == 0:
+                        if max_genes - 1 == genes_counter:
+                            break
             
         self.__string = ''.join(genes)
         return self.__string
