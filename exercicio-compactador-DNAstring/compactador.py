@@ -53,8 +53,8 @@ class Compactador:
         raise FileNotFoundError("No file .bin or .txt to save was found.")
 
     def __createHeader(self, genes_counter: int):
-        genes_counter = genes_counter % 4
-        return genes_counter.to_bytes(1, 'big')
+        last_byte_genes_counter = genes_counter % 4
+        return last_byte_genes_counter.to_bytes(1, 'big')
 
     def compress(self):
         """Converts the DNA string Genes to Bytes. Returns a bytes object."""
@@ -79,7 +79,6 @@ class Compactador:
         if not left_deloc == 6:
             binary_values.append(binary_value)
 
-        # print(int.from_bytes(self.__createHeader(genes_counter)))
         self.__bytes = self.__createHeader(genes_counter) + bytes(binary_values)
         return self.__bytes
 
@@ -98,25 +97,20 @@ class Compactador:
     def decompress(self):
         """Converts DNA bytes back to string. Returns a string containing the DNA sequence."""       
         self._readBin()
-        max_genes = self.__getHeader()
+        last_byte_max_genes = self.__getHeader()
         genes_values_inverted = self.__genesValuesInverter()
+
+        if last_byte_max_genes == 0:
+            last_byte_max_genes = 4
 
         mask = 0b11
         genes = []
         left_shifts = [6,4,2,0]
         for byte_counter, byte in enumerate(self.__bytes):
             for genes_counter, shift in enumerate(left_shifts):
+                if byte_counter == len(self.__bytes) - 1 and genes_counter >= last_byte_max_genes:
+                    break
                 genes.append(genes_values_inverted[(byte >> shift) & mask])
-                if byte_counter == len(self.__bytes) - 1:
-                    if not max_genes == 0:
-                        if max_genes - 1 == genes_counter:
-                            break
-            
+                
         self.__string = ''.join(genes)
-        return self.__string
-
-        
-        
-    
-
-    
+        return self.__string   
