@@ -69,8 +69,9 @@ class Maze:
         self.__mountMaze(maze_file)
         self.__set_entry_exit_cells()
 
-    def exit(self):
-        '''Returns the exit cell if it exists and is possible in the maze.'''
+    def exit(self, animated: bool = False):
+        '''Returns the exit cell if it exists and is possible in the maze. Receives a boolean value for an animated representation of the exit finding process.'''
+        import subprocess, time
         while self.currentCell != self.exitCell:
             self.__set_currentCell_as_visited()
             neighbours = self.__check_neighbours(self.__get_neighbours())
@@ -78,6 +79,10 @@ class Maze:
 
             if self.mazeStack.top() is not None:
                 self.currentCell = self.mazeStack.pop()
+                if animated:
+                    print(self.__str__())
+                    time.sleep(0.4)
+                    subprocess.run("cls", shell=True)
             else:
                 return None
 

@@ -4,7 +4,7 @@ maze = Maze()
 
 maze.start(maze_file="arquivos/labirinto1.txt")
 
-result = maze.exit()
+result = maze.exit(animated=True)
 if result:
     print(f"Exit sucessfully finded, Cell: {result}")
     print(maze)
