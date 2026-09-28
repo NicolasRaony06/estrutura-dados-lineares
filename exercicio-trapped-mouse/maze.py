@@ -13,7 +13,7 @@ class Maze:
         mazeRows = Stack()
         with open(maze_file) as file:
             for line in file.readlines()[::-1]:
-                line = f"1{line.replace('\n', '')}1"
+                line = f"1{line.replace('\n', '').strip()}1"
                 if mazeRows.top() is None:
                     mazeRows.push("1"*len(line))
                 mazeRows.push(line)
@@ -59,10 +59,35 @@ class Maze:
             list_str[self.currentCell.get_y()] = '.'
             self.maze[self.currentCell.get_x()] = ''.join(list_str)
 
+    def __add_neighbours_mazeStack(self, neighbours):
+        if neighbours:
+            for cell in neighbours:
+                self.mazeStack.push(cell)
+
     def start(self, maze_file: str):
+        """Receives a txt file containing the maze structure and mounts the internal maze structure."""
         self.__mountMaze(maze_file)
         self.__set_entry_exit_cells()
 
+    def exit(self):
+        '''Returns the exit cell if it exists and is possible in the maze.'''
+        while self.currentCell != self.exitCell:
+            self.__set_currentCell_as_visited()
+            neighbours = self.__check_neighbours(self.__get_neighbours())
+            self.__add_neighbours_mazeStack(neighbours)
+
+            if self.mazeStack.top() is not None:
+                self.currentCell = self.mazeStack.pop()
+            else:
+                return None
+
+        # self.__set_currentCell_as_visited()
+        return self.currentCell
+
+    def __str__(self):
+        formated_maze = '\n'.join(self.maze)
+        return formated_maze
+        
 # if __name__ == "__main__":
 #     maze = Maze()
 #     maze.start("arquivos/labirinto1.txt")
