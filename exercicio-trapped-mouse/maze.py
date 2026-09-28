@@ -1,3 +1,7 @@
+import os
+import subprocess
+import time
+
 from stack import Stack
 from cell import Cell
 
@@ -71,7 +75,7 @@ class Maze:
 
     def exit(self, animated: bool = False):
         '''Returns the exit cell if it exists and is possible in the maze. Receives a boolean value for an animated representation of the exit finding process.'''
-        import subprocess, time
+        clear_command = 'cls' if os.name == 'nt' else 'clear'
         while self.currentCell != self.exitCell:
             self.__set_currentCell_as_visited()
             neighbours = self.__check_neighbours(self.__get_neighbours())
@@ -82,11 +86,11 @@ class Maze:
                 if animated:
                     print(self.__str__())
                     time.sleep(0.4)
-                    subprocess.run("cls", shell=True)
+                    subprocess.run(clear_command, shell=True)
             else:
                 return None
 
-        # self.__set_currentCell_as_visited()
+        #self.__set_currentCell_as_visited()
         return self.currentCell
 
     def __str__(self):
